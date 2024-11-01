@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "linux-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "cStandard": "c11",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "windows-clang-x64",
+            "compilerPath": "C:/MinGW-W64/mingw64/bin/g++.exe"
+        }
+    ],
+    "version": 4
+}
