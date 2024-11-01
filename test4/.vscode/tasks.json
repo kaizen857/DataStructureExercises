@@ -6,7 +6,7 @@
             "label": "g++.exe build active file",
             "command": "C:\\MinGW-W64\\mingw64\\bin\\g++.exe",
             "args": [
-                //"-g",
+                "-g",
                 "${workspaceFolder}\\src\\*.cpp",
                 "-I",
                 "${workspaceFolder}\\includes",
@@ -14,7 +14,6 @@
                 //"${workspaceFolder}\\src\\SongSelecter.cpp",
                 "-o",
                 "${workspaceFolder}\\main.exe",
-                "-g",
                 "-Og",
                 "-std=c++23",
                 /*"-lmingw32",
@@ -49,14 +48,17 @@
                 "${workspaceFolder}/main.out",
                 "-std=c++23",
                 "-Ofast",
-                "-DNDEBUG",
-                "-m64",
-                "-Bstatic",
-                "-lSDL2main",
-                "-lSDL2",
-                "-lSDL2_image",
-                "-lSDL2_ttf",
-                "-lSDL2_mixer"
+                "-g",
+                "-fexec-charset=utf-8",
+                "-Wall"
+                //"-DNDEBUG",
+                //"-m64",
+                //"-Bstatic",
+                //"-lSDL2main",
+                //"-lSDL2",
+                //"-lSDL2_image",
+                //"-lSDL2_ttf",
+                //"-lSDL2_mixer"
             ],
             "problemMatcher": [
                 "$gcc"
