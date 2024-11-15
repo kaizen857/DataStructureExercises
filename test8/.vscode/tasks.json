@@ -1,0 +1,120 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "g++.exe build active file",
+            "command": "C:\\MinGW-W64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-g",
+                "${workspaceFolder}\\src\\*.cpp",
+                "-I",
+                "${workspaceFolder}\\includes",
+                //"${workspaceFolder}\\src\\MapConvertor.cpp",
+                //"${workspaceFolder}\\src\\SongSelecter.cpp",
+                "-o",
+                "${workspaceFolder}\\main.exe",
+                "-Og",
+                "-std=c++23",
+                /*"-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-lSDL2_mixer",
+                "-mwindows",*/
+                "-Wall",
+                "-fexec-charset=utf-8"
+                
+            ],
+            "options": {
+                "cwd": "C:\\MinGW-W64\\mingw64\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "g++",
+            "args": [
+                //"-pg",
+                "${workspaceFolder}/src/*.cpp",
+                "-I",
+                "${workspaceFolder}/includes",
+                "-o",
+                "${workspaceFolder}/main.out",
+                "-std=c++23",
+                "-Ofast",
+                "-g",
+                "-fexec-charset=utf-8",
+                "-Wall"
+                //"-DNDEBUG",
+                //"-m64",
+                //"-Bstatic",
+                //"-lSDL2main",
+                //"-lSDL2",
+                //"-lSDL2_image",
+                //"-lSDL2_ttf",
+                //"-lSDL2_mixer"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "g++.exe build active file(release)",
+            "command": "C:\\MinGW-W64\\mingw64\\bin\\g++.exe",
+            "args": [
+                //"-g",
+                "${workspaceFolder}\\src\\*.cpp",
+                "-I",
+                "${workspaceFolder}\\includes",
+                "-o",
+                "${workspaceFolder}\\main.exe",
+                "-Ofast",
+                "-m64",
+                "-Bstatic",
+                "-DNDEBUG",
+                "-std=c++23",
+                "-LC:\\MinGW-W64\\mingw64\\lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-mwindows",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-lSDL2_mixer",
+                //"-Wl, --dynamicbase",
+                //"-Wl, --nxcompat",
+                //"-Wl, --high-entropy-va",
+                "-lm",
+                "-ldinput8",
+                "-ldxguid",
+                "-ldxerr8",
+                "-luser32",
+                "-lgdi32",
+                "-lwinmm",
+                "-limm32",
+                "-lole32",
+                "-loleaut32",
+                "-lshell32",
+                "-lsetupapi",
+                "-lversion",
+                "-luuid"
+                //-ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
+            ],
+            "options": {
+                "cwd": "C:\\MinGW-W64\\mingw64\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+    ]
+}
