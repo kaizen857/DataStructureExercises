@@ -243,7 +243,7 @@ int main()
             break;
         }
         std::wcout << "\n";
-#ifdef WINDOWS
+#ifdef _WIN32  
         system("pause");
         system("cls");
 #endif
