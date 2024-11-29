@@ -242,7 +242,7 @@ int main()
             std::wcout << L"输入错误，请重新输入！" << "\n";
             break;
         }
-        wcout << "\n";
+        std::wcout << "\n";
 #ifdef WINDOWS
         system("pause");
         system("cls");
