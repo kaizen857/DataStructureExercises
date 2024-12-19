@@ -1,55 +1,146 @@
 #ifndef __HUFF_HPP__
 #define __HUFF_HPP__
 
-#include <memory>
+#include <iostream>
+#include <queue>
+#include <map>
 #include <vector>
 #include <string>
+
+// 节点结构体
+struct Node
+{
+    char ch;        // 字符
+    long long freq; // 字符频率
+    Node *left;     // 左子树
+    Node *right;    // 右子树
+
+    Node(char character, long long frequency)
+    {
+        ch = character;
+        freq = frequency;
+        left = right = nullptr;
+    }
+};
+
+struct Compare
+{
+    bool operator()(Node *a, Node *b)
+    {
+        return a->freq > b->freq;
+    }
+};
+
 class HuffmanTree
 {
-public:
-    class Node
-    {
-    private:
-        char mdata;
-        int mfrequency;
-        std::shared_ptr<Node> mleft;
-        std::shared_ptr<Node> mright;
-
-    public:
-        // 作为超节点
-        Node(int frequency) :
-            mdata('\0'), mfrequency(frequency), mleft(nullptr), mright(nullptr) {}
-        Node(int frequency, std::shared_ptr<Node> left, std::shared_ptr<Node> right) :
-            mdata('\0'), mfrequency(frequency), mleft(left), mright(right) {}
-        // 作为叶子节点
-        Node(char data, int frequency) :
-            mdata(data), mfrequency(frequency), mleft(nullptr), mright(nullptr) {}
-        Node(char data, int frequency, std::shared_ptr<Node> left, std::shared_ptr<Node> right) :
-            mdata(data), mfrequency(frequency), mleft(left), mright(right) {}
-        ~Node();
-        char getData();
-        int getFrequency();
-        std::shared_ptr<Node> getLeft();
-        std::shared_ptr<Node> getRight();
-        void setLeft(std::shared_ptr<Node> left);
-        void setRight(std::shared_ptr<Node> right);
-        friend class HuffmanTree;
-    };
-    const std::shared_ptr<Node> getRoot() const
-    {
-        return root;
-    }
-    HuffmanTree(std::vector<std::shared_ptr<Node>> nodes);
-    ~HuffmanTree() { root.reset(); }
-    void printTree(std::shared_ptr<Node> node, std::string code = "");
-    std::string encode(const std::string &text);
-    std::string decode(const std::string &encodedText);
-
 private:
-    std::shared_ptr<Node> root;
-    void clear()
+    Node *root;
+    // 字符及其编码的映射
+    std::map<char, std::string> codes;
+
+    // 递归构建编码
+    void generateCodes(Node *node, const std::string &currentCode)
     {
-        root.reset();
+        if (!node)
+        {
+            return;
+        }
+        if (node->left == nullptr && node->right == nullptr)
+        { // 叶子节点
+            codes[node->ch] = currentCode;
+        }
+        generateCodes(node->left, currentCode + "0");  // 左边为0
+        generateCodes(node->right, currentCode + "1"); // 右边为1
+    }
+
+public:
+    // 构造函数，接受字符和频率的映射
+    HuffmanTree(std::map<char, long long> &charFreq)
+    {
+        std::priority_queue<Node *, std::vector<Node *>, Compare> minHeap;
+
+        // 将字符及频率插入优先队列
+        for (auto &pair : charFreq)
+        {
+            minHeap.push(new Node(pair.first, pair.second));
+        }
+
+        // 构建哈夫曼树
+        while (minHeap.size() > 1)
+        {
+            Node *left = minHeap.top();
+            minHeap.pop();
+            Node *right = minHeap.top();
+            minHeap.pop();
+
+            Node *merged = new Node('$', left->freq + right->freq); // 创建合并节点
+            merged->left = left;
+            merged->right = right;
+
+            minHeap.push(merged); // 将新节点插入优先队列
+        }
+
+        root = minHeap.top();    // 获取根节点
+        generateCodes(root, ""); // 生成编码
+    }
+
+    // 显示所有字符的编码
+    void show()
+    {
+        for (auto &pair : codes)
+        {
+            std::cout << pair.first << ": " << pair.second << "\n";
+        }
+    }
+
+    std::string encode(const std::string &text)
+    {
+        std::string encodedText;
+        for (char c : text)
+        {
+            encodedText += codes[c];
+        }
+        return encodedText;
+    }
+
+    std::string decode(const std::string &encodedText)
+    {
+        Node *node = root;
+        std::string decodedText;
+        for (char c : encodedText)
+        {
+            if (c == '0')
+            {
+                node = node->left;
+            }
+            else if (c == '1')
+            {
+                node = node->right;
+            }
+            if (node->left == nullptr && node->right == nullptr)
+            {
+                decodedText += node->ch;
+                node = root;
+            }
+        }
+        return decodedText;
+    }
+
+    // 析构函数，释放内存
+    ~HuffmanTree()
+    {
+        std::queue<Node *> q;
+        q.push(root);
+        while (!q.empty())
+        {
+            Node *node = q.front();
+            q.pop();
+            if (node->left)
+                q.push(node->left);
+            if (node->right)
+                q.push(node->right);
+            delete node;
+        }
     }
 };
 

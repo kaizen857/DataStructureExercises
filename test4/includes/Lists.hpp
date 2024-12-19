@@ -138,23 +138,11 @@ public:
         len = 0;
     }
 
-    int size()
-    {
-        return len;
-    }
-    bool empty()
-    {
-        return len == 0;
-    }
-    Iterator begin()
-    {
-        return Iterator(head);
-    }
+    int size() { return len; }
+    bool empty() { return len == 0; }
+    Iterator begin() { return Iterator(head); }
 
-    Iterator end()
-    {
-        return Iterator(nullptr);
-    }
+    Iterator end() { return Iterator(nullptr); }
 
     void push_front(T data)
     {
@@ -200,11 +188,15 @@ public:
         node *p;
         p = head;
         if (index >= len)
+        {
             throw out_of_range("in at(int index) index out of range");
+        }
         else
         {
             for (int i = 0; i < index; i++)
+            {
                 p = p->next;
+            }
         }
         return p->data;
     }
@@ -246,7 +238,7 @@ public:
         }
         return;
     }
-    // 移除双链表中的指定元素，请注意当元素位于表头或表尾时，删除操作的正确性
+    // 移除双链表中的指定元素
     void remove(Iterator &it)
     {
         if (it.p == nullptr)
@@ -313,11 +305,15 @@ public:
         node *p;
         p = head;
         for (int k = 0; k < i; k++)
+        {
             p = p->next;
+        }
         p->data = vj;
         p = head;
         for (int k = 0; k < j; k++)
+        {
             p = p->next;
+        }
         p->data = vi;
     }
 
@@ -329,10 +325,14 @@ public:
         while (low < high)
         {
             while (low < high && this->operator[](high) >= pivotkey)
+            {
                 high--;
+            }
             swap(low, high);
             while (low < high && this->operator[](low) <= pivotkey)
+            {
                 low++;
+            }
             swap(low, high);
         }
         return low;

@@ -3,25 +3,36 @@
 
 int main(void)
 {
-    BinTree<int> tree;
+    BinTree<char> tree;
     bool quit = false;
-    std::string input;
+    char input;
+    std::cout << "please input the bintree in Level order traversal:" << "\n";
+    // std::string input;
     while (!quit)
     {
         std::cin >> input;
-        if (input == "q")
+        if (input == 'q')
         {
             quit = true;
         }
         else
         {
-            auto num = std::stoi(input);
-            tree.insert(num);
+            // auto num = std::stoi(input);
+            tree.insert(tree.getRoot(), input);
         }
     }
-
-    tree.show();
+    std::cout << "Preorder traversal:\n";
+    tree.preorder(tree.getRoot());
+    std::cout << "\n\n";
+    std::cout << "Inorder traversal:\n";
+    tree.inorder(tree.getRoot());
+    std::cout << "\n\n";
+    std::cout << "Postorder traversal:\n";
+    tree.postorder(tree.getRoot());
+    std::cout << "\n\n";
+    std::cout << "Level order traversal:\n";
+    tree.levelorder(tree.getRoot());
     std::cout << "\n\n\n\n";
-    tree.levelorder();
+    tree.print();
     return 0;
 }

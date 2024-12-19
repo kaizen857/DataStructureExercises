@@ -165,7 +165,7 @@ int main()
     p = L->next;
     while (p)
     {
-        std::cout << p->data;
+        std::cout << p->data << " ";
         p = p->next;
     }
     return 0;

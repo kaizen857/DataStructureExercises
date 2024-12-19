@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <iostream>
 #include <stdlib.h>
+#include <stack>
 
 class Student
 {
@@ -26,7 +27,22 @@ public:
     bool operator<=(const Student &other) const { return exp <= other.exp; }
     bool operator>(const Student &other) const { return exp > other.exp; }
     bool operator<(const Student &other) const { return exp < other.exp; }
+    bool operator==(const Student &other) const { return name == other.name && number == other.number; }
 };
+class LastOps
+{
+private:
+    int ops;
+    Student stu;
+
+public:
+    LastOps(int op, Student po) :
+        ops(op), stu(po) {}
+    int getOps() const { return ops; }
+    Student getStu() { return stu; }
+};
+
+std::stack<LastOps> LastOpStack;
 
 int main()
 {
@@ -47,7 +63,7 @@ int main()
                    << L"6 ------ 为某学号学生减指定经验值" << "\n"
                    << L"7 ------ 按姓名查找学生经验值" << "\n"
                    << L"8 ------ 求经验值最高的学生信息" << "\n"
-                   << L"9 ------ 排序" << "\n"
+                   << L"9 ------ 撤销上一步操作" << "\n"
                    << L"0 ------ 退出程序" << "\n"
                    << L"请选择菜单编号[0-8):";
         int choice;
@@ -80,6 +96,7 @@ int main()
                 Student student(name, number, exp);
                 students.push_back(student);
                 std::wcout << L"学生信息插入成功！" << "\n";
+                LastOpStack.push(LastOps(choice, student));
             }
             break;
         case 3:
@@ -95,8 +112,11 @@ int main()
                 {
                     if (it->getName() == name)
                     {
+                        auto student = *it;
+                        LastOpStack.push(LastOps(choice, *it));
                         students.remove(it);
                         std::wcout << L"学生信息删除成功！" << "\n";
+
                         found = true;
                         break;
                     }
@@ -141,6 +161,7 @@ int main()
                 {
                     if (it->getNumber() == number)
                     {
+                        LastOpStack.push(LastOps(choice, *it));
                         it->setExp(it->getExp() + exp);
                         std::wcout << L"学生信息修改成功！" << "\n";
                         break;
@@ -168,6 +189,7 @@ int main()
                 {
                     if (it->getNumber() == number)
                     {
+                        LastOpStack.push(LastOps(choice, *it));
                         it->setExp(it->getExp() - exp);
                         std::wcout << L"学生信息修改成功！" << "\n";
                         break;
@@ -231,8 +253,34 @@ int main()
             }
             break;
         case 9:
-            // 排序
-            students.QuickSort();
+            // 撤销上一步操作
+            {
+                if (LastOpStack.empty())
+                {
+                    std::wcout << L"没有可撤销的操作！" << "\n";
+                }
+                else
+                {
+                    LastOps lastOp = LastOpStack.top();
+                    LastOpStack.pop();
+                    auto op = lastOp.getOps();
+                    if (op == 2)
+                    {
+                        auto it = students.find(lastOp.getStu());
+                        students.remove(it);
+                    }
+                    else if (op == 3)
+                    {
+                        students.push_back(lastOp.getStu());
+                    }
+                    else if (op == 5 || op == 6)
+                    {
+                        auto it = students.find(lastOp.getStu());
+                        it->setExp(lastOp.getStu().getExp());
+                    }
+                    std::wcout << L"操作已撤销！" << "\n";
+                }
+            }
             break;
         case 0:
             // 退出程序
