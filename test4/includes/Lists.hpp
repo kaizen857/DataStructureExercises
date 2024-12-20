@@ -1,7 +1,6 @@
 #ifndef __LISTS_HPP_
 #define __LISTS_HPP_
 #include <stdexcept>
-using namespace std;
 
 template <typename T>
 class Lists
@@ -183,24 +182,6 @@ public:
         return;
     }
 
-    T operator[](int index)
-    {
-        node *p;
-        p = head;
-        if (index >= len)
-        {
-            throw out_of_range("in at(int index) index out of range");
-        }
-        else
-        {
-            for (int i = 0; i < index; i++)
-            {
-                p = p->next;
-            }
-        }
-        return p->data;
-    }
-
     // 查找节点
     int indexOf(T _data)
     {
@@ -222,7 +203,7 @@ public:
         node *p;
         p = head;
         if (index >= len)
-            throw out_of_range("in removeAt(int index) index out of range");
+            throw std::out_of_range("in removeAt(int index) index out of range");
         else
         {
             // 移动到要删除的节点处
@@ -243,7 +224,7 @@ public:
     {
         if (it.p == nullptr)
         {
-            throw invalid_argument("in remove(Iterator &it) iterator is nullptr");
+            throw std::invalid_argument("in remove(Iterator &it) iterator is nullptr");
         }
         else if (it.p == head)
         {
@@ -315,44 +296,6 @@ public:
             p = p->next;
         }
         p->data = vi;
-    }
-
-    // 子表划分函数，返回枢轴值
-    int Partition(int low, int high)
-    {
-        T pivotkey;
-        pivotkey = this->operator[](low); // 用子表的第一个记录作为枢轴记录
-        while (low < high)
-        {
-            while (low < high && this->operator[](high) >= pivotkey)
-            {
-                high--;
-            }
-            swap(low, high);
-            while (low < high && this->operator[](low) <= pivotkey)
-            {
-                low++;
-            }
-            swap(low, high);
-        }
-        return low;
-    }
-
-    // 快速排序递归函数
-    void QSort(int low, int high)
-    {
-        int pivot;
-        if (low < high)
-        {
-            pivot = Partition(low, high);
-            QSort(low, pivot - 1);
-            QSort(pivot + 1, high);
-        }
-    }
-    // 快速排序
-    void QuickSort()
-    {
-        QSort(0, len - 1);
     }
 };
 
