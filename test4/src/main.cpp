@@ -47,7 +47,6 @@ int main()
                    << L"6 ------ 为某学号学生减指定经验值" << "\n"
                    << L"7 ------ 按姓名查找学生经验值" << "\n"
                    << L"8 ------ 求经验值最高的学生信息" << "\n"
-                   << L"9 ------ 排序" << "\n"
                    << L"0 ------ 退出程序" << "\n"
                    << L"请选择菜单编号[0-8):";
         int choice;
@@ -230,10 +229,6 @@ int main()
                 }
             }
             break;
-        case 9:
-            // 排序
-            students.QuickSort();
-            break;
         case 0:
             // 退出程序
             return 0;
@@ -243,7 +238,7 @@ int main()
             break;
         }
         std::wcout << "\n";
-#ifdef _WIN32  
+#ifdef _WIN32
         system("pause");
         system("cls");
 #endif
