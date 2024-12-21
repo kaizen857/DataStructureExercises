@@ -1,17 +1,16 @@
 #include "../includes/bintree.hpp"
-#include <string>
 
 int main(void)
 {
     BinTree<char> tree;
     bool quit = false;
     char input;
-    std::cout << "please input the bintree in Level order traversal:" << "\n";
+    std::cout << "please input the bintree in Level order traversal (q to quit):" << "\n";
     // std::string input;
     while (!quit)
     {
         std::cin >> input;
-        if (input == 'q')
+        if (input == 'q' || input == 'Q')
         {
             quit = true;
         }
@@ -32,7 +31,7 @@ int main(void)
     std::cout << "\n\n";
     std::cout << "Level order traversal:\n";
     tree.levelorder(tree.getRoot());
-    std::cout << "\n\n\n\n";
+    std::cout << "\n";
     tree.print();
     return 0;
 }

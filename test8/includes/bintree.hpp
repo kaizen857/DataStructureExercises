@@ -3,7 +3,7 @@
 #include <queue>
 #include <iostream>
 
-// 二叉树模板类(node中包括parent指针)
+// 二叉树模板类
 template <typename T>
 class BinTree
 {
