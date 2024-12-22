@@ -265,7 +265,19 @@ public:
             len--;
         }
     }
-
+    T operator[](int index)
+    {
+        node *p;
+        p = head;
+        if (index >= len)
+            throw std::out_of_range("in at(int index) index out of range");
+        else
+        {
+            for (int i = 0; i < index; i++)
+                p = p->next;
+        }
+        return p->data;
+    }
     void clear()
     {
         node *bgn = head;
